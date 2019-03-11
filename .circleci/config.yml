@@ -14,6 +14,7 @@ jobs:
           root: my_workspace
           # Must be relative path from root
           paths:
+            - echo-output
 
   test:
     docker:
