@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 jobs:
   build:
@@ -28,7 +28,7 @@ jobs:
       - run: cat /tmp/workspace/echo-output
 
 workflows:
-  version: 2
+  version: 2.1
   main-workflow:
     jobs:
       - build
