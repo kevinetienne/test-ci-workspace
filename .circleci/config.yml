@@ -1,0 +1,35 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/python:2.7.16
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: sudo pip install -r requirements.txt
+      - run: cd /usr/local/lib/python2.7/site-packages/ && zip -r ~/repo/lib/site-packages.zip .
+      - run: ls && ls -lah lib
+      - persist_to_workspace:
+          root: lib
+          paths:
+            - .
+
+  test:
+    docker:
+      - image: circleci/python:2.7.16
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: lib
+      - run: ls -la lib
+      - run: ls -la
+      - run: PYTHONPATH=lib/site-packages.zip python -c 'import sys;print(sys.path)'
+      - run: PYTHONPATH=lib/site-packages.zip python -c 'import simplejson;print(simplejson.__doc__)'
+
+workflows:
+  version: 2
+  main-workflow:
+    jobs:
+      - build
+      - test
