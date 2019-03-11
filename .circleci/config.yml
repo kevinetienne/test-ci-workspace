@@ -26,7 +26,7 @@ jobs:
           # Must be absolute path or relative path from working_directory
           at: /home/circleci/repo/workspace
 
-      - run: cat /tmp/workspace/echo-output
+      - run: cat /home/circleci/workspace/echo-output
 
 workflows:
   version: 2.1
