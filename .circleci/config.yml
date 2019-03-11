@@ -7,13 +7,13 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run: sudo pip install -r requirements.txt
-      - run: cd /usr/local/lib/python2.7/site-packages/ && zip -r ~/repo/lib/site-packages.zip .
-      - run: ls && ls -lah lib
+      - run: mkdir -p my_workspace
+      - run: echo "Hello World" > my_workspace/echo-output
       - persist_to_workspace:
-          root: lib
+          # Must be an absolute path, or relative path from working_directory
+          root: my_workspace
+          # Must be relative path from root
           paths:
-            - .
 
   test:
     docker:
@@ -21,11 +21,10 @@ jobs:
     working_directory: ~/repo
     steps:
       - attach_workspace:
-          at: lib
-      - run: ls -la lib
-      - run: ls -la
-      - run: PYTHONPATH=lib/site-packages.zip python -c 'import sys;print(sys.path)'
-      - run: PYTHONPATH=lib/site-packages.zip python -c 'import simplejson;print(simplejson.__doc__)'
+          # Must be absolute path or relative path from working_directory
+          at: my_workspace
+
+      - run: cat my_workspace/echo-output
 
 workflows:
   version: 2
