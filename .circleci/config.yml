@@ -23,9 +23,9 @@ jobs:
     steps:
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
-          at: my_workspace
+          at: /tmp/workspace
 
-      - run: cat my_workspace/echo-output
+      - run: cat /tmp/workspace/echo-output
 
 workflows:
   version: 2
