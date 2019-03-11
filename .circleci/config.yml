@@ -1,5 +1,6 @@
-version: 2.1
-
+# Javascript Node CircleCI 2.0 configuration file
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+version: 2
 jobs:
   build:
     docker:
@@ -7,31 +8,25 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run: mkdir -p workspace
-      - run: echo "Hello World" > workspace/echo-output
-      - run: pwd
+      - run: sudo pip install -r requirements.txt
+      - run: cd /usr/local/lib/python2.7/site-packages/ && zip -r ~/repo/lib/site-packages.zip .
       - persist_to_workspace:
-          # Must be an absolute path, or relative path from working_directory
-          root: workspace
-          # Must be relative path from root
+          root: lib
           paths:
-            - echo-output
+            - site-packages.zip
 
   test:
     docker:
       - image: circleci/python:2.7.16
     working_directory: ~/repo
     steps:
+      - checkout
       - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: workspace
-
-      - run: ls -lah
-      - run: ls -lah workspace
-      - run: cat workspace/echo-output
+          at: lib
+      - run: ls -lah lib
 
 workflows:
-  version: 2.1
+  version: 2
   main-workflow:
     jobs:
       - build
