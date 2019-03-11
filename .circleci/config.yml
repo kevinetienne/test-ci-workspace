@@ -24,6 +24,7 @@ jobs:
       - attach_workspace:
           at: lib
       - run: ls -lah lib
+      - run: PYTHONPATH=lib/site-packages.zip python -c 'import simplejson'
 
 workflows:
   version: 2
