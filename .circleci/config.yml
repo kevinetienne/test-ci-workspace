@@ -12,7 +12,7 @@ jobs:
       - run: pwd
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory
-          root: /home/circleci/repo/workspace
+          root: workspace
           # Must be relative path from root
           paths:
             - echo-output
@@ -24,11 +24,11 @@ jobs:
     steps:
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
-          at: /home/circleci/repo/workspace
+          at: workspace
 
       - run: ls -lah
       - run: ls -lah workspace
-      - run: cat /home/circleci/workspace/echo-output
+      - run: cat workspace/echo-output
 
 workflows:
   version: 2.1
