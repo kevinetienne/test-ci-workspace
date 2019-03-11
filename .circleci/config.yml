@@ -27,7 +27,7 @@ jobs:
           at: /home/circleci/repo/workspace
 
       - run: ls -lah
-      - run: ls -workspace
+      - run: ls -lah workspace
       - run: cat /home/circleci/workspace/echo-output
 
 workflows:
